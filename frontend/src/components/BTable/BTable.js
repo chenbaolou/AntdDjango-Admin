@@ -29,6 +29,10 @@ class BTable extends React.Component {
     const { fetch } = this.props;
     if (!lodash.isEqual(nextFetch, fetch)) {
       this.props = nextProps;
+      // 对表格中的数据刷新后取消选中的行
+      if (this.props.rowSelection) {
+        this.props.rowSelection.selectedRowKeys = [];
+      }
       this.fetch();
     }
   }
@@ -41,6 +45,7 @@ class BTable extends React.Component {
     /* pageSize改变 */
     if (page.pageSize !== pagination.pageSize) {
       limit = page.pageSize;
+      pagination.pageSize = page.pageSize;
     } else {
       /* page改变 */
       start = (page.current - 1) * pagination.pageSize;
@@ -76,7 +81,7 @@ class BTable extends React.Component {
         return;
       }
       const { pagination } = this.state;
-      pagination.total = result.total || pagination.total
+      pagination.total = result.total || pagination.total;
       this.setState({
         loading: false,
         dataSource: dataKey ? result[dataKey] : result.data,
@@ -86,7 +91,7 @@ class BTable extends React.Component {
   }
 
   render() {
-    const { fetch, rowKey, ...tableProps } = this.props;
+    const { fetch, rowKey, rowSelection, ...tableProps } = this.props;
     const { loading, dataSource, pagination } = this.state;
     return (
       <Table
@@ -98,6 +103,7 @@ class BTable extends React.Component {
         pagination={pagination}
         dataSource={dataSource}
         rowKey={rowKey}
+        rowSelection={rowSelection}
       />
     );
   }
@@ -113,6 +119,7 @@ BTable.propTypes = {
   ]),
   columns: PropTypes.array,
   dataSource: PropTypes.array,
+  rowSelection: PropTypes.object,
 }
 
 export default BTable;

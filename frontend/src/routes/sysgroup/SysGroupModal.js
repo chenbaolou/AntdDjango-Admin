@@ -38,7 +38,10 @@ const modal = ({
   }
 
   const checkGroupName = (rule, value, callback) => {
-
+    if (value === '') {
+      callback();
+      return true;
+    }
     let p = checkName(value, item);
     p.then((response) => {
       if (response.status === 200) {

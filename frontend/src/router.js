@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Router } from 'dva/router'
 import App from './routes/app'
 
-import Sysuser from "./routes/sysusers/index.js";
+import Sysuser from "./routes/sysuser/index.js";
 
 const registerModel = (app, model) => {
   if (!(app._models.filter(m => m.namespace === model.namespace).length === 1)) {
@@ -59,9 +59,9 @@ const Routers = function ({ history, app }) {
           path: 'sysuser',
           getComponent(nextState, cb) {
             require.ensure([], require => {
-              registerModel(app, require('./models/sysusers'))
-              cb(null, require('./routes/sysusers/'));
-            }, 'sysusers');
+              registerModel(app, require('./models/sysuser'))
+              cb(null, require('./routes/sysuser/'));
+            }, 'sysUser');
           },
         }, {
           path: 'login',

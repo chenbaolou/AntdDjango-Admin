@@ -93,8 +93,6 @@ def groups(request):
             sortOrder = ''
 
         total = Group.objects.filter(**kwargs).count()
-        if start >= total:
-            start = ((total-1)/limit)*limit
         data = Group.objects.filter(**kwargs).order_by(sortOrder+sortField)[start:start + limit]
 
         ro = {
@@ -145,4 +143,83 @@ def checkGroupName(request, name=''):
         else:
             return HttpResponseNotFound()
 
+def users(request):
 
+    #加载列表，包括分页、过滤和排序
+    if request.method == 'GET':
+
+        start = int(request.GET.get('start') or 0)
+        limit = int(request.GET.get('limit') or sys.maxint)
+        field = request.GET.get('field') or 'username'
+        keyword = request.GET.get('keyword') or ''
+        kwargs = {field+'__icontains': keyword}
+        sortField = request.GET.get('sortField') or 'id'
+        sortOrder = request.GET.get('sortField') or 'ascend'
+        if sortOrder == 'descend':
+            sortOrder = '-'
+        else:
+            sortOrder = ''
+
+        total = User.objects.filter(**kwargs).count()
+        data = User.objects.filter(**kwargs).order_by(sortOrder+sortField)[start:start + limit]
+
+        ro = {
+            'success': True,
+            'total': total,
+            'data': serializer(data, foreign=True, many=True, datetime_format="%Y-%m-%d %H:%M:%S")
+        }
+
+        return JsonResponse(ro, content_type="application/json")
+
+    elif request.method == "DELETE":
+
+        request.data = json.loads(request.body)
+        ids = str(request.data["id"]).split(",")
+
+        User.objects.filter(id__in=ids).delete()
+
+        return JsonResponse({'success':True, 'count': len(ids)})
+
+    # 修改
+    elif request.method == "PUT":
+        request.data = json.loads(request.body)
+        user = User.objects.get(id=request.data["id"])
+        user.username = request.data["username"]
+        user.save()
+
+        return JsonResponse({'success': True, 'count': 1})
+
+    # 新增
+    elif request.method == "POST":
+        request.data = json.loads(request.body)
+
+        user = User()
+        user.username = request.data["username"]
+        user.set_password(request.data["password"])
+        user.save()
+
+        return JsonResponse({'success': True, 'count': 1})
+
+
+def checkUserName(request, username=''):
+    if request.method == 'HEAD':
+        _list = User.objects.filter(username=username)
+        queryId = request.GET.get('id')
+        if(queryId):
+            _list = _list.filter(~Q(id=queryId))
+        print(_list)
+        if len(_list) == 0:
+            return JsonResponse({'success': True, 'username': username})
+        else:
+            return HttpResponseNotFound()
+
+
+def setUserGroup(request, groupIds=''):
+    if request.method == 'PUT':
+        request.data = json.loads(request.body)
+        users = User.objects.filter(id__in=request.data['userIds'].split(','))
+        groups = Group.objects.filter(id__in=groupIds.split(','))
+        for user in users:
+            user.groups = groups
+            user.save()
+        return JsonResponse({'success': True})

@@ -8,6 +8,7 @@ const Search = Input.Search;
 const SysGroupFilter = ({
   onFilterChange,
   onAdd,
+  onDelete,
   filter,
   form: {
     getFieldsValue,
@@ -36,7 +37,7 @@ const SysGroupFilter = ({
       </Col>
       <Col style={{ marginBottom: 16, textAlign: 'right' }}>
         <Button onClick={onAdd} size="large" icon="plus" style={{ marginRight: '10px' }} />
-        <Button size="large" icon="delete" />
+        <Button onClick={onDelete} size="large" icon="delete" />
       </Col>
     </Row>
   );
@@ -45,6 +46,7 @@ const SysGroupFilter = ({
 SysGroupFilter.propTypes = {
   form: PropTypes.object.isRequired,
   onAdd: PropTypes.func,
+  onDelete: PropTypes.func,
   onFilterChange: PropTypes.func,
   filter: PropTypes.object,
 }

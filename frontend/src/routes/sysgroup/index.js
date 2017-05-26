@@ -11,7 +11,11 @@ const confirm = Modal.confirm
 
 function SysGroup({ location, dispatch, sysGroup }) {
   const { currentItem, modalVisible, modalType, filterCase, timestamp } = sysGroup;
-  const { field, keyword } = location.query
+  const { field, keyword } = location.query;
+
+  let state = {
+    selectedRowKeys: [],  // Check here to configure the default column
+  };
 
   const sysGroupModalProps = {
     item: modalType === 'create' ? {} : currentItem,
@@ -50,6 +54,20 @@ function SysGroup({ location, dispatch, sysGroup }) {
         },
       });
     },
+    onDelete() {
+      if (state.selectedRowKeys.length === 0) {
+        return;
+      }
+      confirm({
+        title: '您确定要删除选中记录吗?',
+        onOk() {
+          dispatch({
+            type: 'sysGroup/delete',
+            payload: state.selectedRowKeys.join(','),
+          });
+        },
+      });
+    },
   }
 
   const handleMenuClick = (record, e) => {
@@ -74,6 +92,18 @@ function SysGroup({ location, dispatch, sysGroup }) {
     }
   }
 
+
+  // rowSelection object indicates the need for row selection
+  const rowSelection = {
+    onChange: (selectedRowKeys) => {
+      state.selectedRowKeys = selectedRowKeys;
+      console.log(state.selectedRowKeys);
+    },
+    getCheckboxProps: record => ({
+      disabled: record.name === 'root',    // Column configuration not to be checked
+    }),
+  };
+
   const fetchDataTableProps = {
     fetch: {
       url: config.api.sysgroups,
@@ -89,7 +119,6 @@ function SysGroup({ location, dispatch, sysGroup }) {
       title: '名称',
       dataIndex: 'name',
       key: 'name',
-      width: '40%',
       sorter: (a, b) => a.name - b.name,
     }, {
       title: '操作',
@@ -101,6 +130,7 @@ function SysGroup({ location, dispatch, sysGroup }) {
     },
     ],
     rowKey: record => record.id,
+    rowSelection,
   }
 
   /* 这样写的作用是，重复显示和隐藏form表单，每次都是新生成的表单，否则表单的数据需要手动重置 */
@@ -120,7 +150,6 @@ SysGroup.propTypes = {
   sysGroup: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
-  loading: PropTypes.bool,
 }
 
 export default connect(({ sysGroup, loading }) => ({ sysGroup, loading: loading.models.sysgroup }))(SysGroup);

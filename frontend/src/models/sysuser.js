@@ -1,130 +1,112 @@
-import { create, remove, update, query } from '../services/sysusers';
+import { create, remove, update, setGroup } from '../services/sysuser';
+import { query as queryGroup } from '../services/sysgroup';
 import { parse } from 'qs';
 
 export default {
 
-  namespace: 'sysusers',
+  namespace: 'sysUser',
 
   state: {
-    list: [],
     currentItem: {},
     modalVisible: false,
+    transferVisible: false,
     modalType: 'create',
-    isMotion: localStorage.getItem('antdAdminUserIsMotion') === 'true',
-    pagination: {
-      showSizeChanger: true,
-      showQuickJumper: true,
-      showTotal: total => `共 ${total} 条`,
-      current: 1,
-      total: null,
-    },
-  },
-
-  subscriptions: {
-    setup({ dispatch, history }) {
-      history.listen(location => {
-        if (location.pathname === '/sysusers') {
-          dispatch({
-            type: 'query',
-            payload: location.query,
-          });
-        }
-      });
-    },
+    filterCase: {},
+    timestamp: null,
+    selectedRowKeys: [],
+    groupList: [],
+    targetKeys: [],
   },
 
   effects: {
-    *query({ payload }, { call, put }) {
-      const data = yield call(query, parse(payload))
-      if (data) {
-        yield put({
-          type: 'querySuccess',
-          payload: {
-            list: data.data,
-            pagination: data.page,
-          },
-        });
-      }
-    },
     *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload })
       if (data && data.success) {
-        yield put({
-          type: 'querySuccess',
-          payload: {
-            list: data.data,
-            pagination: {
-              total: data.page.total,
-              current: data.page.current,
-            },
-          },
-        });
+        yield put({ type: 'reload' });
+      } else {
+        throw data;
       }
     },
     *create({ payload }, { call, put }) {
-      yield put({ type: 'hideModal' })
       const data = yield call(create, payload)
       if (data && data.success) {
-        yield put({
-          type: 'querySuccess',
-          payload: {
-            list: data.data,
-            pagination: {
-              total: data.page.total,
-              current: data.page.current,
-            },
-          },
-        });
+        yield put({ type: 'hideModal' });
+        yield put({ type: 'reload' });
+      } else {
+        throw data;
       }
     },
     *update({ payload }, { select, call, put }) {
-      yield put({ type: 'hideModal' })
-      const id = yield select(({ users }) => users.currentItem.id)
+      yield put({ type: 'hideModal' });
+      const id = yield select(({ sysUser }) => sysUser.currentItem.id)
       const newUser = { ...payload, id }
       const data = yield call(update, newUser)
       if (data && data.success) {
+        yield put({ type: 'reload' });
+      } else {
+        throw data;
+      }
+    },
+    *updateGroup({ payload }, { call, put }) {
+      yield put({ type: 'hideWindow', payload: { wName: 'transferVisible' } });
+      const { userIds, groupIds } = payload;
+      const data = yield call(setGroup, groupIds, { userIds });
+      if (data && data.success) {
+        yield put({ type: 'reload' });
+      } else {
+        throw data;
+      }
+    },
+    *queryGroup({ payload }, { call, put }) {
+      const data = yield call(queryGroup, parse(payload));
+      if (data && data.data) {
+        let groupList = data.data.map((item) => {
+          return { key: item.id, title: item.name };
+        });
         yield put({
-          type: 'querySuccess',
+          type: 'queryGroupSuccess',
           payload: {
-            list: data.data,
-            pagination: {
-              total: data.page.total,
-              current: data.page.current,
-            },
+            groupList,
           },
         });
       }
-    },
-    *switchIsMotion({
-      payload,
-    }, { put }) {
-      yield put({
-        type: 'handleSwitchIsMotion',
-      });
     },
   },
 
   reducers: {
-    querySuccess(state, action) {
-      const { list, pagination } = action.payload
-      return { ...state,
-        list,
-        pagination: {
-          ...state.pagination,
-          ...pagination,
-        },
-      };
-    },
     showModal(state, action) {
       return { ...state, ...action.payload, modalVisible: true };
+    },
+    showWindow(state, action) {
+      const { wName, ...others } = action.payload;
+      state[wName] = true;
+      return { ...state, ...others };
     },
     hideModal(state) {
       return { ...state, modalVisible: false };
     },
-    handleSwitchIsMotion(state) {
-      localStorage.setItem('antdAdminUserIsMotion', !state.isMotion);
-      return { ...state, isMotion: !state.isMotion };
+    hideWindow(state, action) {
+      const { wName, ...others } = action.payload;
+      state[wName] = false;
+      return { ...state, ...others };
+    },
+    search(state, action) {
+      return { ...state, filterCase: action.payload };
+    },
+    rowSelection(state, action) {
+      return { ...state,
+        selectedRowKeys: action.payload.selectedRowKeys,
+        targetKeys: action.payload.targetKeys,
+      };
+    },
+    reload(state) {
+      let timestamp = Date.parse(new Date());
+      return { ...state, timestamp };
+    },
+    queryGroupSuccess(state, action) {
+      const { groupList } = action.payload;
+      state.transferVisible = true;
+      return { ...state, groupList };
     },
   },
-
 };
