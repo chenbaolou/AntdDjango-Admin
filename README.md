@@ -1,12 +1,12 @@
 # AntdDjango-Admin
 
-##概述
+## 概述
 本项目是基于[antd-admin](https://github.com/zuiidea/antd-admin)和[django](https://github.com/django/django)两个项目，其中[antd-admin](https://github.com/zuiidea/antd-admin)是基于蚂蚁金服的[ant-design](https://github.com/ant-design/ant-design)框架构建，在此对上述框架和其附属框架表示感谢。
 
-##代码结构
+## 代码结构
 backend目录是后端实现， frontend目录是前端实现。这里只是提供全栈演示，完全可以根据需求独立使用。
 
-##运行方式
+## 运行方式
 ```bash
 cd backend
 python manage.py runserver
