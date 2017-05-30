@@ -7,8 +7,8 @@ import SysGroupModal from './SysGroupModal';
 import SysGroupTable from './SysGroupTable';
 
 function SysGroupX({ location, dispatch, sysGroupX, loading }) {
-  const { list, pagination, currentItem, modalVisible, modalType } = sysGroupX
-  const { field, keyword } = location.query
+  const { list, pagination, currentItem, modalVisible, modalType } = sysGroupX;
+  const { field, keyword } = location.query;
   const { pageSize } = pagination;
 
   const sysGroupModalProps = {
@@ -26,7 +26,7 @@ function SysGroupX({ location, dispatch, sysGroupX, loading }) {
         type: 'sysGroupX/hideModal',
       });
     },
-  }
+  };
 
   const sysGroupTableProps = {
     dataSource: list,
@@ -70,7 +70,7 @@ function SysGroupX({ location, dispatch, sysGroupX, loading }) {
         },
       });
     },
-  }
+  };
 
   const sysGroupFilterProps = {
     field,
@@ -96,11 +96,11 @@ function SysGroupX({ location, dispatch, sysGroupX, loading }) {
         },
       });
     },
-  }
+  };
 
   /* 这样写的作用是，重复显示和隐藏form表单，每次都是新生成的表单，否则表单的数据需要手动重置 */
   const SysGroupModalGen = () =>
-    <SysGroupModal {...sysGroupModalProps} />
+    <SysGroupModal {...sysGroupModalProps} />;
 
   return (
     <div className="content-inner">
@@ -116,6 +116,6 @@ SysGroupX.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.bool,
-}
+};
 
 export default connect(({ sysGroupX, loading }) => ({ sysGroupX, loading: loading.models.sysgroupx }))(SysGroupX);

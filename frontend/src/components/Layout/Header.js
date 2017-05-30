@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Menu, Icon, Popover } from 'antd'
-import styles from './Header.less'
-import Menus from './Menu'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Menu, Icon, Popover } from 'antd';
+import styles from './Header.less';
+import Menus from './Menu';
 
-const SubMenu = Menu.SubMenu
+const SubMenu = Menu.SubMenu;
 
-function Header ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys, menu }) {
-  let handleClickMenu = e => e.key === 'logout' && logout()
+function Header({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys, menu }) {
+  let handleClickMenu = e => e.key === 'logout' && logout();
   const menusProps = {
     menu,
     siderFold: false,
@@ -17,7 +17,7 @@ function Header ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVi
     location,
     navOpenKeys,
     changeOpenKeys,
-  }
+  };
   return (
     <div className={styles.header}>
       {isNavbar
@@ -46,7 +46,7 @@ function Header ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVi
         </Menu>
       </div>
     </div>
-  )
+  );
 }
 
 Header.propTypes = {
@@ -61,6 +61,6 @@ Header.propTypes = {
   switchMenuPopover: PropTypes.func,
   navOpenKeys: PropTypes.array,
   changeOpenKeys: PropTypes.func,
-}
+};
 
-export default Header
+export default Header;

@@ -137,4 +137,4 @@ module.exports = [
     name: 'Test Navigation22',
     router: '/navigation/navigation2/navigation2',
   },
-]
+];

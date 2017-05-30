@@ -24,7 +24,7 @@ export default {
       }
     },
     *create({ payload }, { call, put }) {
-      const data = yield call(create, payload)
+      const data = yield call(create, payload);
       if (data && data.success) {
         yield put({ type: 'hideWindow', payload: { wName: 'modalVisible' } });
         yield put({ type: 'reload' });

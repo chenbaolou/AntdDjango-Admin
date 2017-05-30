@@ -7,7 +7,7 @@ import BTable from '../../components/BTable';
 import { config } from '../../utils';
 import { DropOption } from '../../components';
 import { Modal } from 'antd';
-const confirm = Modal.confirm
+const confirm = Modal.confirm;
 
 function SysGroup({ location, dispatch, sysGroup }) {
   const { currentItem, modalVisible, modalType, filterCase, timestamp } = sysGroup;
@@ -32,7 +32,7 @@ function SysGroup({ location, dispatch, sysGroup }) {
         type: 'sysGroup/hideModal',
       });
     },
-  }
+  };
 
   const sysGroupFilterProps = {
     field,
@@ -68,7 +68,7 @@ function SysGroup({ location, dispatch, sysGroup }) {
         },
       });
     },
-  }
+  };
 
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
@@ -90,7 +90,7 @@ function SysGroup({ location, dispatch, sysGroup }) {
         },
       });
     }
-  }
+  };
 
 
   // rowSelection object indicates the need for row selection
@@ -125,17 +125,17 @@ function SysGroup({ location, dispatch, sysGroup }) {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]} />;
       },
     },
     ],
     rowKey: record => record.id,
     rowSelection,
-  }
+  };
 
   /* 这样写的作用是，重复显示和隐藏form表单，每次都是新生成的表单，否则表单的数据需要手动重置 */
   const SysGroupModalGen = () =>
-    <SysGroupModal {...sysGroupModalProps} />
+    <SysGroupModal {...sysGroupModalProps} />;
 
   return (
     <div className="content-inner">
@@ -150,6 +150,6 @@ SysGroup.propTypes = {
   sysGroup: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
-}
+};
 
 export default connect(({ sysGroup, loading }) => ({ sysGroup, loading: loading.models.sysgroup }))(SysGroup);

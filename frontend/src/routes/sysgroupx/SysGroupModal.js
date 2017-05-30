@@ -11,7 +11,7 @@ const formItemLayout = {
   wrapperCol: {
     span: 14,
   },
-}
+};
 
 const modal = ({
   visible,
@@ -32,13 +32,12 @@ const modal = ({
       }
       const data = {
         ...getFieldsValue(),
-      }
+      };
       onOk(data);
     });
   }
 
   const checkGroupName = (rule, value, callback) => {
-
     let p = checkName(value, item);
     p.then((response) => {
       if (response.status === 200) {
@@ -46,10 +45,10 @@ const modal = ({
       } else {
         callback('名称已经存在');
       }
-    }, (response) => {
+    }, () => {
      // failure
     });
-  }
+  };
 
   const modalOpts = {
     title: `${type === 'create' ? '新建组' : '修改组'}`,
@@ -57,7 +56,7 @@ const modal = ({
     onOk: handleOk,
     onCancel,
     wrapClassName: 'vertical-center-modal',
-  }
+  };
 
   return (
     <Modal {...modalOpts}>
@@ -78,7 +77,7 @@ const modal = ({
       </Form>
     </Modal>
   );
-}
+};
 
 modal.propTypes = {
   form: PropTypes.object.isRequired,
@@ -87,6 +86,6 @@ modal.propTypes = {
   item: PropTypes.object,
   onCancel: PropTypes.func,
   onOk: PropTypes.func,
-}
+};
 
 export default Form.create()(modal);

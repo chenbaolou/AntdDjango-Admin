@@ -27,4 +27,18 @@ module.exports = [
     icon: 'user',
     router: '/sysuser',
   },
-]
+  {
+    id: 6,
+    bpid: 1,
+    name: '示例',
+    icon: 'user',
+  },
+  {
+    id: 61,
+    bpid: 6,
+    mpid: 6,
+    name: '文件上传',
+    icon: 'team',
+    router: '/filetest',
+  },
+];

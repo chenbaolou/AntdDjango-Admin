@@ -1,3 +1,4 @@
+import React from 'react';
 import { connect } from 'dva';
 import PropTypes from 'prop-types';
 import SysUserFilter from './filter';
@@ -6,7 +7,7 @@ import BTable from '../../components/BTable';
 import { DropOption } from '../../components';
 import { config } from '../../utils';
 import { Modal, message } from 'antd';
-const confirm = Modal.confirm
+const confirm = Modal.confirm;
 
 function SysUser({ dispatch, sysUser }) {
   const { currentItem, modalVisible, transferVisible, modalType, filterCase, timestamp, selectedRowKeys, groupList, targetKeys } = sysUser;
@@ -25,7 +26,7 @@ function SysUser({ dispatch, sysUser }) {
         type: 'sysUser/hideModal',
       });
     },
-  }
+  };
 
   const sysGroupTransferProps = {
     visible: transferVisible,
@@ -48,7 +49,7 @@ function SysUser({ dispatch, sysUser }) {
         },
       });
     },
-  }
+  };
 
   const sysUserFilterProps = {
     onFilterChange(value) {
@@ -93,7 +94,7 @@ function SysUser({ dispatch, sysUser }) {
       });*/
     },
     selectedRowKeys,
-  }
+  };
 
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
@@ -119,7 +120,7 @@ function SysUser({ dispatch, sysUser }) {
         },
       });
     }
-  }
+  };
 
   // rowSelection object indicates the need for row selection
   const rowSelection = {
@@ -150,7 +151,7 @@ function SysUser({ dispatch, sysUser }) {
     const groups = record.groups;
     let groupNames = groups.map((item) => item.name);
     return <p>所在用户组: {groupNames.join(', ')}</p>;
-  }
+  };
 
   const fetchDataTableProps = {
     fetch: {
@@ -179,21 +180,21 @@ function SysUser({ dispatch, sysUser }) {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]} />;
       },
     },
     ],
     rowKey: record => record.id,
     rowSelection,
     expandedRowRender,
-  }
+  };
 
   /* 这样写的作用是，重复显示和隐藏form表单，每次都是新生成的表单，否则表单的数据需要手动重置 */
   const SysUserModalGen = () =>
-    <UserModal {...sysUserModalProps} />
+    <UserModal {...sysUserModalProps} />;
 
   const SysGroupTransferGen = () =>
-    <GroupTransfer {...sysGroupTransferProps} />
+    <GroupTransfer {...sysGroupTransferProps} />;
 
   return (
     <div className="content-inner">
@@ -208,6 +209,6 @@ function SysUser({ dispatch, sysUser }) {
 SysUser.propTypes = {
   sysUser: PropTypes.object,
   dispatch: PropTypes.func,
-}
+};
 
 export default connect(({ sysUser }) => ({ sysUser }))(SysUser);

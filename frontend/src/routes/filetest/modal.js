@@ -12,7 +12,7 @@ const formItemLayout = {
   wrapperCol: {
     span: 14,
   },
-}
+};
 
 class UploadModal extends React.PureComponent {
   state = {
@@ -38,10 +38,10 @@ class UploadModal extends React.PureComponent {
         }
         const data = {
           ...getFieldsValue(),
-        }
+        };
         onOk(data);
       });
-    }
+    };
     const handleRemove = () => {
       let filePath = this.state.filePath;
       let p = removeFile({ filePath });
@@ -53,12 +53,12 @@ class UploadModal extends React.PureComponent {
       }, () => {
        // failure
       });
-    }
+    };
 
     const windowClose = () => {
       handleRemove();
       onCancel();
-    }
+    };
 
     const modalOpts = {
       title: `${type === 'create' ? '上传文件' : '修改文件'}`,
@@ -66,7 +66,7 @@ class UploadModal extends React.PureComponent {
       onOk: handleOk,
       onCancel: windowClose,
       wrapClassName: 'vertical-center-modal',
-    }
+    };
 
     const uploadOpts = {
       name: 'file',
@@ -76,7 +76,7 @@ class UploadModal extends React.PureComponent {
       data: { path: 'filetest' },
       withCredentials: true,
       onRemove: handleRemove,
-    }
+    };
 
     const handleChange = (info) => {
       let fileList = info.fileList;
@@ -87,45 +87,45 @@ class UploadModal extends React.PureComponent {
       this.setState({ fileList });
       console.log(this.state);
       return info && info.fileList;
-    }
+    };
 
     return (
-    <Modal {...modalOpts}>
-      <Form layout="horizontal">
-        <FormItem
-          {...formItemLayout}
-          label="Upload"
-        >
-          {getFieldDecorator('upload', {
-            valuePropName: 'fileList',
-            getValueFromEvent: handleChange,
-            rules: [{
-              required: true,
-              message: '请上传文件',
-            }],
-          })(
-            <Upload {...uploadOpts} >
-              <Button disabled={this.state.fileList.length === 1}>
-                <Icon type="upload" /> 上传
-              </Button>
-            </Upload>
-          )}
-        </FormItem>
-      </Form>
-    </Modal>
+      <Modal {...modalOpts}>
+        <Form layout="horizontal">
+          <FormItem
+            {...formItemLayout}
+            label="Upload"
+          >
+            {getFieldDecorator('upload', {
+              valuePropName: 'fileList',
+              getValueFromEvent: handleChange,
+              rules: [{
+                required: true,
+                message: '请上传文件',
+              }],
+            })(
+              <Upload {...uploadOpts} >
+                <Button disabled={this.state.fileList.length === 1}>
+                  <Icon type="upload" /> 上传
+                </Button>
+              </Upload>
+            )}
+          </FormItem>
+        </Form>
+      </Modal>
     );
   }
 }
 
 UploadModal.propTypes = {
-  form: PropTypes.object.isRequired,
+  form: PropTypes.object,
   visible: PropTypes.bool,
   type: PropTypes.string,
   item: PropTypes.object,
   onCancel: PropTypes.func,
   onOk: PropTypes.func,
-}
+};
 
 module.exports = {
   UploadModal: Form.create()(UploadModal),
-}
+};

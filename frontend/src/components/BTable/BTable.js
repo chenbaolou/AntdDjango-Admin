@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'antd';
 import { request, config } from '../../utils';
-const { defaultPagination } = config
+const { defaultPagination } = config;
 import lodash from 'lodash';
 
 class BTable extends React.Component {
@@ -113,13 +113,13 @@ class BTable extends React.Component {
 BTable.propTypes = {
   fetch: PropTypes.object,
   rowKey: PropTypes.func,
-  pagination: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.object,
+  pagination: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object,
   ]),
   columns: PropTypes.array,
   dataSource: PropTypes.array,
   rowSelection: PropTypes.object,
-}
+};
 
 export default BTable;

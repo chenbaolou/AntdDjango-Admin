@@ -14,7 +14,7 @@ export default {
 
   effects: {
     *'delete'({ payload }, { call, put }) {
-      const data = yield call(remove, { id: payload })
+      const data = yield call(remove, { id: payload });
       if (data && data.success) {
         yield put({ type: 'reload' });
       } else {
@@ -22,7 +22,7 @@ export default {
       }
     },
     *create({ payload }, { call, put }) {
-      const data = yield call(create, payload)
+      const data = yield call(create, payload);
       if (data && data.success) {
         yield put({ type: 'hideModal' });
         yield put({ type: 'reload' });
@@ -32,9 +32,9 @@ export default {
     },
     *update({ payload }, { select, call, put }) {
       yield put({ type: 'hideModal' });
-      const id = yield select(({ sysGroup }) => sysGroup.currentItem.id)
-      const newGroup = { ...payload, id }
-      const data = yield call(update, newGroup)
+      const id = yield select(({ sysGroup }) => sysGroup.currentItem.id);
+      const newGroup = { ...payload, id };
+      const data = yield call(update, newGroup);
       if (data && data.success) {
         yield put({ type: 'reload' });
       } else {

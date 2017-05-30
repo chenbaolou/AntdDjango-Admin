@@ -21,7 +21,7 @@ class Filter extends React.PureComponent {
     const handleSubmit = () => {
       let fields = getFieldsValue();
       onFilterChange(fields);
-    }
+    };
 
     return (
       <Row gutter={24}>
@@ -51,6 +51,6 @@ Filter.propTypes = {
   onDelete: PropTypes.func,
   onFilterChange: PropTypes.func,
   selectedRowKeys: PropTypes.array,
-}
+};
 
 export default Form.create()(Filter);

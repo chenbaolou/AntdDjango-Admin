@@ -18,9 +18,9 @@ const SysGroupFilter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue();
     onFilterChange(fields);
-  }
+  };
 
-  const { keyword } = filter
+  const { keyword } = filter;
 
   return (
     <Row gutter={24}>
@@ -41,7 +41,7 @@ const SysGroupFilter = ({
       </Col>
     </Row>
   );
-}
+};
 
 SysGroupFilter.propTypes = {
   form: PropTypes.object.isRequired,
@@ -49,6 +49,6 @@ SysGroupFilter.propTypes = {
   onDelete: PropTypes.func,
   onFilterChange: PropTypes.func,
   filter: PropTypes.object,
-}
+};
 
 export default Form.create()(SysGroupFilter);

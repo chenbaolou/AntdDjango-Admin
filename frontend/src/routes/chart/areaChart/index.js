@@ -1,7 +1,7 @@
-import React from 'react'
-import { Row, Col, Card, Button } from 'antd'
-import Container from '../Container'
-import * as d3 from 'd3-shape'
+import React from 'react';
+import { Row, Col, Card, Button } from 'antd';
+import Container from '../Container';
+import * as d3 from 'd3-shape';
 import {
   AreaChart,
   Area,
@@ -9,7 +9,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-} from 'recharts'
+} from 'recharts';
 
 const data = [
   {
@@ -48,7 +48,7 @@ const data = [
     pv: 4300,
     amt: 2100,
   },
-]
+];
 
 const mixData = [
   {
@@ -87,7 +87,7 @@ const mixData = [
     pv: 4300,
     amt: 2100,
   },
-]
+];
 
 const percentData = [
   {
@@ -126,12 +126,12 @@ const percentData = [
     b: 4300,
     c: 2100,
   },
-]
+];
 
 const colProps = {
   lg: 12,
   md: 24,
-}
+};
 
 const SimpleAreaChart = () => (
   <Container>
@@ -148,7 +148,7 @@ const SimpleAreaChart = () => (
       <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
     </AreaChart>
   </Container>
-)
+);
 
 const StackedAreaChart = () => (
   <Container>
@@ -167,25 +167,25 @@ const StackedAreaChart = () => (
       <Area type="monotone" dataKey="amt" stackId="1" stroke="#ffc658" fill="#ffc658" />
     </AreaChart>
   </Container>
-)
+);
 
 // StackedAreaChart
 
 const toPercent = (decimal, fixed = 0) => {
-  return `${(decimal * 100).toFixed(fixed)}%`
-}
+  return `${(decimal * 100).toFixed(fixed)}%`;
+};
 
 const getPercent = (value, total) => {
   const ratio = total > 0
     ? value / total
-    : 0
+    : 0;
 
-  return toPercent(ratio, 2)
-}
+  return toPercent(ratio, 2);
+};
 
 const renderTooltipContent = (o) => {
-  const { payload, label } = o
-  const total = payload.reduce((result, entry) => (result + entry.value), 0)
+  const { payload, label } = o;
+  const total = payload.reduce((result, entry) => (result + entry.value), 0);
 
   return (
     <div className="customized-tooltip-content">
@@ -200,8 +200,8 @@ const renderTooltipContent = (o) => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
 const PercentAreaChart = () => (
   <Container>
@@ -220,10 +220,10 @@ const PercentAreaChart = () => (
       <Area type="monotone" dataKey="c" stackId="1" stroke="#ffc658" fill="#ffc658" />
     </AreaChart>
   </Container>
-)
+);
 
 // CardinalAreaChart
-const cardinal = d3.curveCardinal.tension(0.2)
+const cardinal = d3.curveCardinal.tension(0.2);
 const CardinalAreaChart = () => (
   <Container>
     <AreaChart data={mixData} margin={{
@@ -240,7 +240,7 @@ const CardinalAreaChart = () => (
       <Area type={cardinal} dataKey="pv" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.3} />
     </AreaChart>
   </Container>
-)
+);
 
 const EditorPage = () => (
   <div className="content-inner">
@@ -274,6 +274,6 @@ const EditorPage = () => (
       </Col>
     </Row>
   </div>
-)
+);
 
-export default EditorPage
+export default EditorPage;

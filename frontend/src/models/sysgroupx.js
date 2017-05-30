@@ -2,7 +2,7 @@ import { create, remove, update, query } from '../services/sysgroup';
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
 import { config } from '../utils';
-const { defaultPagination } = config
+const { defaultPagination } = config;
 
 export default {
 
@@ -57,7 +57,7 @@ export default {
       }
     },
     *'delete'({ payload }, { call, put }) {
-      const data = yield call(remove, { id: payload })
+      const data = yield call(remove, { id: payload });
       if (data && data.success) {
         yield put({ type: 'requery' });
       } else {
@@ -66,7 +66,7 @@ export default {
     },
     *create({ payload }, { call, put }) {
       yield put({ type: 'hideModal' });
-      const data = yield call(create, payload)
+      const data = yield call(create, payload);
       if (data && data.success) {
         yield put({ type: 'requery' });
       } else {
@@ -75,9 +75,9 @@ export default {
     },
     *update({ payload }, { select, call, put }) {
       yield put({ type: 'hideModal' });
-      const id = yield select(({ sysGroup }) => sysGroup.currentItem.id)
-      const newGroup = { ...payload, id }
-      const data = yield call(update, newGroup)
+      const id = yield select(({ sysGroup }) => sysGroup.currentItem.id);
+      const newGroup = { ...payload, id };
+      const data = yield call(update, newGroup);
       if (data && data.success) {
         yield put({ type: 'requery' });
       } else {

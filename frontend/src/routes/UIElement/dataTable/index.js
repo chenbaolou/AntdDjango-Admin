@@ -1,13 +1,13 @@
-import React from 'react'
-import { DataTable } from '../../../components'
-import { Table, Row, Col, Card, Select } from 'antd'
+import React from 'react';
+import { DataTable } from '../../../components';
+import { Table, Row, Col, Card, Select } from 'antd';
 
 class DataTablePage extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = { filterCase: {
       gender: '',
-    } }
+    } };
   }
 
   handleSelectChange = (gender) => {
@@ -15,15 +15,15 @@ class DataTablePage extends React.Component {
       filterCase: {
         gender,
       },
-    })
+    });
   }
-  render () {
-    const { filterCase } = this.state
+  render() {
+    const { filterCase } = this.state;
     const staticDataTableProps = {
       dataSource: [{ key: '1', name: 'John Brown', age: 24, address: 'New York' }, { key: '2', name: 'Jim Green', age: 23, address: 'London' }],
       columns: [{ title: 'name', dataIndex: 'name' }, { title: 'Age', dataIndex: 'age' }, { title: 'Address', dataIndex: 'address' }],
       pagination: false,
-    }
+    };
 
     const fetchDataTableProps = {
       fetch: {
@@ -40,7 +40,7 @@ class DataTablePage extends React.Component {
         { title: 'Gender', dataIndex: 'gender' },
       ],
       rowKey: 'registered',
-    }
+    };
 
     const caseChangeDataTableProps = {
       fetch: {
@@ -58,7 +58,7 @@ class DataTablePage extends React.Component {
         { title: 'Gender', dataIndex: 'gender' },
       ],
       rowKey: 'registered',
-    }
+    };
 
     return (<div className="content-inner">
       <Row gutter={32}>
@@ -129,9 +129,9 @@ class DataTablePage extends React.Component {
           />
         </Col>
       </Row>
-    </div>)
+    </div>);
   }
 }
 
 
-export default DataTablePage
+export default DataTablePage;

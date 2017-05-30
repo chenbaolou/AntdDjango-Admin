@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Table, Modal } from 'antd';
 import { DropOption } from '../../components';
 
-const confirm = Modal.confirm
+const confirm = Modal.confirm;
 
-function table({ loading, dataSource, pagination, onPageChange, onShowSizeChange, onDeleteItem, onEditItem, location }) {
+function table({ loading, dataSource, pagination, onPageChange, onShowSizeChange, onDeleteItem, onEditItem }) {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
       onEditItem(record);
@@ -17,7 +17,7 @@ function table({ loading, dataSource, pagination, onPageChange, onShowSizeChange
         },
       });
     }
-  }
+  };
 
   const columns = [{
     title: '名称',
@@ -29,7 +29,7 @@ function table({ loading, dataSource, pagination, onPageChange, onShowSizeChange
     key: 'operation',
     width: 100,
     render: (text, record) => {
-      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]} />
+      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '编辑' }, { key: '2', name: '删除' }]} />;
     },
   },
   ];
@@ -56,7 +56,6 @@ table.propTypes = {
   onShowSizeChange: PropTypes.func,
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
-  location: PropTypes.object,
-}
+};
 
 export default table;

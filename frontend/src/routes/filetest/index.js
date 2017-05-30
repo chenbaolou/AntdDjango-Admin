@@ -1,3 +1,4 @@
+import React from 'react';
 import { connect } from 'dva';
 import PropTypes from 'prop-types';
 import FileTestFilter from './filter';
@@ -5,8 +6,8 @@ import { UploadModal } from './modal';
 import BTable from '../../components/BTable';
 import { DropOption } from '../../components';
 import { config } from '../../utils';
-import { Modal, message } from 'antd';
-const confirm = Modal.confirm
+import { Modal } from 'antd';
+const confirm = Modal.confirm;
 
 function FileTest({ dispatch, fileTest }) {
   const { currentItem, modalVisible, modalType, filterCase, timestamp, selectedRowKeys } = fileTest;
@@ -28,7 +29,7 @@ function FileTest({ dispatch, fileTest }) {
         },
       });
     },
-  }
+  };
 
   const filterProps = {
     onFilterChange(value) {
@@ -61,7 +62,7 @@ function FileTest({ dispatch, fileTest }) {
       });
     },
     selectedRowKeys,
-  }
+  };
 
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
@@ -83,7 +84,7 @@ function FileTest({ dispatch, fileTest }) {
         },
       });
     }
-  }
+  };
 
   // rowSelection object indicates the need for row selection
   const rowSelection = {
@@ -121,17 +122,17 @@ function FileTest({ dispatch, fileTest }) {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '删除' }]} />;
       },
     },
     ],
     rowKey: record => record.id,
     rowSelection,
-  }
+  };
 
   /* 这样写的作用是，重复显示和隐藏form表单，每次都是新生成的表单，否则表单的数据需要手动重置 */
   const UploadModalGen = () =>
-    <UploadModal {...uploadModalProps} />
+    <UploadModal {...uploadModalProps} />;
 
   return (
     <div className="content-inner">
@@ -145,6 +146,6 @@ function FileTest({ dispatch, fileTest }) {
 FileTest.propTypes = {
   fileTest: PropTypes.object,
   dispatch: PropTypes.func,
-}
+};
 
 export default connect(({ fileTest }) => ({ fileTest }))(FileTest);

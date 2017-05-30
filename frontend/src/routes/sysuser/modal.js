@@ -11,7 +11,7 @@ const formItemLayout = {
   wrapperCol: {
     span: 14,
   },
-}
+};
 
 const SysUserModal = ({
   visible,
@@ -35,7 +35,7 @@ const SysUserModal = ({
       }
       const data = {
         ...getFieldsValue(),
-      }
+      };
       onOk(data);
     });
   }
@@ -60,7 +60,7 @@ const SysUserModal = ({
   const handleConfirmBlur = (e) => {
     const value = e.target.value;
     state.confirmDirty = state.confirmDirty || !!value;
-  }
+  };
 
   const checkPassword = (rule, value, callback) => {
     if (value && value !== getFieldValue('password')) {
@@ -68,14 +68,14 @@ const SysUserModal = ({
     } else {
       callback();
     }
-  }
+  };
 
   const checkConfirm = (rule, value, callback) => {
     if (value && state.confirmDirty) {
       validateFields(['confirm'], { force: true });
     }
     callback();
-  }
+  };
 
 
   const modalOpts = {
@@ -84,7 +84,7 @@ const SysUserModal = ({
     onOk: handleOk,
     onCancel,
     wrapClassName: 'vertical-center-modal',
-  }
+  };
 
   return (
     <Modal {...modalOpts}>
@@ -127,7 +127,7 @@ const SysUserModal = ({
       </Form>
     </Modal>
   );
-}
+};
 
 SysUserModal.propTypes = {
   form: PropTypes.object.isRequired,
@@ -136,7 +136,7 @@ SysUserModal.propTypes = {
   item: PropTypes.object,
   onCancel: PropTypes.func,
   onOk: PropTypes.func,
-}
+};
 
 class GroupTransfer extends React.PureComponent {
   state = {
@@ -156,7 +156,7 @@ class GroupTransfer extends React.PureComponent {
     const { visible, onCancel, groupList, onOk } = this.props;
     const handleOk = () => {
       onOk(this.state.targetKeys);
-    }
+    };
     const transferOpts = {
       visible,
       onOk: handleOk,
@@ -185,9 +185,9 @@ GroupTransfer.propTypes = {
   visible: PropTypes.bool,
   onCancel: PropTypes.func,
   groupList: PropTypes.array,
-}
+};
 
 module.exports = {
   UserModal: Form.create()(SysUserModal),
   GroupTransfer,
-}
+};

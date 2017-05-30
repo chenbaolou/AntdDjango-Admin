@@ -32,4 +32,4 @@ module.exports = {
     current: 1,
     total: null,
   },
-}
+};

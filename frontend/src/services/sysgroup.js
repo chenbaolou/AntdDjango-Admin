@@ -1,6 +1,6 @@
 import { config, request } from '../utils';
-const { api } = config
-const { sysgroups } = api
+const { api } = config;
+const { sysgroups } = api;
 
 export function query(params) {
   return request({

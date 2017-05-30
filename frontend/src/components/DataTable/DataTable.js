@@ -1,48 +1,48 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Table } from 'antd'
-import { request } from '../../utils'
-import lodash from 'lodash'
-import './DataTable.less'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Table } from 'antd';
+import { request } from '../../utils';
+import lodash from 'lodash';
+import './DataTable.less';
 
 class DataTable extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     const { dataSource, pagination = {
       showSizeChanger: true,
       showQuickJumper: true,
       showTotal: total => `共 ${total} 条`,
       current: 1,
       total: 100 },
-    } = props
+    } = props;
     this.state = {
       loading: false,
       dataSource,
       fetchData: {},
       pagination,
-    }
+    };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.fetch) {
-      this.fetch()
+      this.fetch();
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    const staticNextProps = lodash.cloneDeep(nextProps)
-    delete staticNextProps.columns
-    const { columns, ...otherProps } = this.props
+  componentWillReceiveProps(nextProps) {
+    const staticNextProps = lodash.cloneDeep(nextProps);
+    delete staticNextProps.columns;
+    const { columns, ...otherProps } = this.props;
 
     if (!lodash.isEqual(staticNextProps, otherProps)) {
-      this.props = nextProps
-      this.fetch()
+      this.props = nextProps;
+      this.fetch();
     }
   }
 
   handleTableChange = (pagination, filters, sorter) => {
-    const pager = this.state.pagination
-    pager.current = pagination.current
+    const pager = this.state.pagination;
+    pager.current = pagination.current;
     this.setState({
       pagination: pager,
       fetchData: {
@@ -53,14 +53,14 @@ class DataTable extends React.Component {
         ...filters,
       },
     }, () => {
-      this.fetch()
-    })
+      this.fetch();
+    });
   }
 
   fetch = () => {
-    const { fetch: { url, data, dataKey } } = this.props
-    const { fetchData } = this.state
-    this.setState({ loading: true })
+    const { fetch: { url, data, dataKey } } = this.props;
+    const { fetchData } = this.state;
+    this.setState({ loading: true });
     this.promise = request({
       url,
       data: {
@@ -69,21 +69,21 @@ class DataTable extends React.Component {
       },
     }).then((result) => {
       if (!this.refs.DataTable) {
-        return
+        return;
       }
-      const { pagination } = this.state
-      pagination.total = result.total || pagination.total
+      const { pagination } = this.state;
+      pagination.total = result.total || pagination.total;
       this.setState({
         loading: false,
         dataSource: dataKey ? result[dataKey] : result.data,
         pagination,
-      })
-    })
+      });
+    });
   }
 
-  render () {
-    const { fetch, ...tableProps } = this.props
-    const { loading, dataSource, pagination } = this.state
+  render() {
+    const { fetch, ...tableProps } = this.props;
+    const { loading, dataSource, pagination } = this.state;
 
     return (<Table
       ref="DataTable"
@@ -93,7 +93,7 @@ class DataTable extends React.Component {
       {...tableProps}
       pagination={pagination}
       dataSource={dataSource}
-    />)
+    />);
   }
 }
 
@@ -101,12 +101,12 @@ class DataTable extends React.Component {
 DataTable.propTypes = {
   fetch: PropTypes.object,
   rowKey: PropTypes.string,
-  pagination: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.object,
+  pagination: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object,
   ]),
   columns: PropTypes.array,
   dataSource: PropTypes.array,
-}
+};
 
-export default DataTable
+export default DataTable;
