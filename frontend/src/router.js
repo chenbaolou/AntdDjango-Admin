@@ -64,8 +64,16 @@ const Routers = function ({ history, app }) {
             }, 'sysUser');
           },
         }, {
+          path: 'fileTest',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/filetest'))
+              cb(null, require('./routes/filetest/'));
+            }, 'fileTest');
+          },
+        }, {
           path: 'login',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/login'))
               cb(null, require('./routes/login/'))

@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'dva'
-import { Layout } from '../components'
-import { classnames, config, menu } from '../utils'
-import { Helmet } from 'react-helmet'
-import '../themes/index.less'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'dva';
+import { Layout } from '../components';
+import { classnames, config, menu } from '../utils';
+import { Helmet } from 'react-helmet';
+import '../themes/index.less';
 
 const { Header, Bread, Footer, Sider, styles } = Layout
 
@@ -59,7 +59,7 @@ const App = ({ children, location, dispatch, app }) => {
   return (
     <div>
       <Helmet>
-        <title>ANTD ADMIN</title>
+        <title>{config.title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href={config.logoSrc} type="image/x-icon" />
         {config.iconFontUrl ? <script src={config.iconFontUrl}></script> : ''}

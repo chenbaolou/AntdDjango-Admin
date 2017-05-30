@@ -1,7 +1,7 @@
 {
   "private": true,
   "dependencies": {
-    "antd": "^2.9.1",
+    "antd": "^2.10.2",
     "classnames": "^2.2.5",
     "draftjs-to-markdown": "^0.4.0",
     "dva": "^1.1.0",

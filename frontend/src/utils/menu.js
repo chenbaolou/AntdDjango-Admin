@@ -6,13 +6,6 @@ module.exports = [
     router: '/dashboard',
   },
   {
-    id: 2,
-    bpid: 1,
-    name: 'User Manage',
-    icon: 'user',
-    router: '/users',
-  },
-  {
     id: 4,
     bpid: 1,
     name: '权限管理',

@@ -100,4 +100,4 @@ Menus.propTypes = {
   changeOpenKeys: PropTypes.func,
 }
 
-export default Menus
+export default Menus;
